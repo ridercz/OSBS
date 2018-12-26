@@ -47,12 +47,12 @@ FOR %%I IN (*.scad) DO (
 
         REM -- Build all-in-one model
         ECHO ^ ^ %%~nI.%OSBS_TARGET_FORMAT%
-        %OSBS_SCAD% -D "osbs_selected_extruder=0" -o %OSBS_TARGET_FOLDER%\%%~nI.%OSBS_TARGET_FORMAT% %%I
+        %OSBS_SCAD% -D "osbs_selected_extruder=0" -o "%OSBS_TARGET_FOLDER%\%%~nI.%OSBS_TARGET_FORMAT%" "%%I"
 
         REM -- Build models for all extruders
         IF !OSBS_EC! GTR 1 FOR /L %%E IN (1,1,!OSBS_EC!) DO (
             ECHO ^ ^ %%~nI-E%%E.%OSBS_TARGET_FORMAT%
-            %OSBS_SCAD% -D "osbs_selected_extruder=%%E" -o %OSBS_TARGET_FOLDER%\%%~nI-E%%E.%OSBS_TARGET_FORMAT% %%I
+            %OSBS_SCAD% -D "osbs_selected_extruder=%%E" -o "%OSBS_TARGET_FOLDER%\%%~nI-E%%E.%OSBS_TARGET_FORMAT%" "%%I"
         )
     ) ELSE (
         REM -- Build instructions present and we have something.scad.vars file
@@ -63,22 +63,22 @@ FOR %%I IN (*.scad) DO (
             ECHO ^ ^ Set %%V:
 
             REM -- Copy file to working copy ~something.scad and append variable line
-            COPY /Y %%I ~%%~nI-%%V.scad > NUL
-            ECHO. >> ~%%~nI-%%V.scad
-            ECHO %%W >> ~%%~nI-%%V.scad
+            COPY /Y "%%I" "~%%~nI-%%V.scad" > NUL
+            ECHO. >> "~%%~nI-%%V.scad"
+            ECHO %%W >> "~%%~nI-%%V.scad"
 
             REM -- Build all-in-one model
             ECHO ^ ^ ^ ^ %%~nI-%%V.%OSBS_TARGET_FORMAT%
-            %OSBS_SCAD% -D "osbs_selected_extruder=0" -o %OSBS_TARGET_FOLDER%\%%~nI-%%V.%OSBS_TARGET_FORMAT% ~%%~nI-%%V.scad
+            %OSBS_SCAD% -D "osbs_selected_extruder=0" -o "%OSBS_TARGET_FOLDER%\%%~nI-%%V.%OSBS_TARGET_FORMAT%" "~%%~nI-%%V.scad"
 
             REM -- Build models for all extruders
             IF !OSBS_EC! GTR 1 FOR /L %%E IN (1,1,!OSBS_EC!) DO (
                 ECHO ^ ^ ^ ^ %%~nI-%%V-E%%E.%OSBS_TARGET_FORMAT%
-                %OSBS_SCAD% -D "osbs_selected_extruder=%%E" -o %OSBS_TARGET_FOLDER%\%%~nI-%%V-E%%E.%OSBS_TARGET_FORMAT% ~%%~nI-%%V.scad
+                %OSBS_SCAD% -D "osbs_selected_extruder=%%E" -o "%OSBS_TARGET_FOLDER%\%%~nI-%%V-E%%E.%OSBS_TARGET_FORMAT%" "~%%~nI-%%V.scad"
             )
 
             REM -- Delete working copy of .scad file
-            DEL ~%%~nI-%%V.scad
+            DEL "~%%~nI-%%V.scad"
         )
     )
 )
