@@ -53,6 +53,7 @@ FOR %%I IN (*.scad) DO (
         FOR /F "eol=# tokens=1* delims=:" %%V IN (%%I.vars) DO (
             ECHO ^ ^ Set %%V:
             COPY /Y %%I ~%%~nI-%%V.scad > NUL
+            ECHO. >> ~%%~nI-%%V.scad
             ECHO %%W >> ~%%~nI-%%V.scad
 
             ECHO ^ ^ ^ ^ %%~nI-%%V.stl
