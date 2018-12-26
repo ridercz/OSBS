@@ -126,7 +126,7 @@ Of course, you can combine multiple extruders with `.vars` files as mentioned ab
 
 # OSBS Configuration
 
-You may set the following variables at the beginning of the `build.cmd` file:
+You may set the following variables at the beginning of the [`build.cmd`](build.cmd) file:
 
 ```
 SET OSBS_SCAD="C:\Program Files\OpenSCAD\openscad.com"
