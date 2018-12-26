@@ -5,6 +5,7 @@ REM -- Configuration
 SET OSBS_VERSION=1.0.0
 SET OSBS_SCAD="C:\Program Files\OpenSCAD\openscad.com"
 SET OSBS_TARGET_FOLDER=.\STL
+SET OSBS_TARGET_FORMAT=stl
 
 REM -- Print banner
 ECHO ^ _____ _____ _____ _____
@@ -19,7 +20,7 @@ IF NOT EXIST %OSBS_TARGET_FOLDER%\NUL (
     MKDIR %OSBS_TARGET_FOLDER%
 ) ELSE (
     ECHO Deleting files in output %OSBS_TARGET_FOLDER%...
-    DEL %OSBS_TARGET_FOLDER%\*.stl
+    DEL %OSBS_TARGET_FOLDER%\*.%OSBS_TARGET_FORMAT%
 )
 
 REM -- Process all *.scad files
@@ -45,13 +46,13 @@ FOR %%I IN (*.scad) DO (
         ECHO Building %%I for !OSBS_EC! extruder(s^):
 
         REM -- Build all-in-one model
-        ECHO ^ ^ %%~nI.stl
-        %OSBS_SCAD% -D "osbs_selected_extruder=0" -o %OSBS_TARGET_FOLDER%\%%~nI.stl %%I
+        ECHO ^ ^ %%~nI.%OSBS_TARGET_FORMAT%
+        %OSBS_SCAD% -D "osbs_selected_extruder=0" -o %OSBS_TARGET_FOLDER%\%%~nI.%OSBS_TARGET_FORMAT% %%I
 
         REM -- Build models for all extruders
         IF !OSBS_EC! GTR 1 FOR /L %%E IN (1,1,!OSBS_EC!) DO (
-            ECHO ^ ^ %%~nI-E%%E.stl
-            %OSBS_SCAD% -D "osbs_selected_extruder=%%E" -o %OSBS_TARGET_FOLDER%\%%~nI-E%%E.stl %%I
+            ECHO ^ ^ %%~nI-E%%E.%OSBS_TARGET_FORMAT%
+            %OSBS_SCAD% -D "osbs_selected_extruder=%%E" -o %OSBS_TARGET_FOLDER%\%%~nI-E%%E.%OSBS_TARGET_FORMAT% %%I
         )
     ) ELSE (
         REM -- Build instructions present and we have something.scad.vars file
@@ -67,13 +68,13 @@ FOR %%I IN (*.scad) DO (
             ECHO %%W >> ~%%~nI-%%V.scad
 
             REM -- Build all-in-one model
-            ECHO ^ ^ ^ ^ %%~nI-%%V.stl
-            %OSBS_SCAD% -D "osbs_selected_extruder=0" -o %OSBS_TARGET_FOLDER%\%%~nI-%%V.stl ~%%~nI-%%V.scad
+            ECHO ^ ^ ^ ^ %%~nI-%%V.%OSBS_TARGET_FORMAT%
+            %OSBS_SCAD% -D "osbs_selected_extruder=0" -o %OSBS_TARGET_FOLDER%\%%~nI-%%V.%OSBS_TARGET_FORMAT% ~%%~nI-%%V.scad
 
             REM -- Build models for all extruders
             IF !OSBS_EC! GTR 1 FOR /L %%E IN (1,1,!OSBS_EC!) DO (
-                ECHO ^ ^ ^ ^ %%~nI-%%V-E%%E.stl
-                %OSBS_SCAD% -D "osbs_selected_extruder=%%E" -o %OSBS_TARGET_FOLDER%\%%~nI-%%V-E%%E.stl ~%%~nI-%%V.scad
+                ECHO ^ ^ ^ ^ %%~nI-%%V-E%%E.%OSBS_TARGET_FORMAT%
+                %OSBS_SCAD% -D "osbs_selected_extruder=%%E" -o %OSBS_TARGET_FOLDER%\%%~nI-%%V-E%%E.%OSBS_TARGET_FORMAT% ~%%~nI-%%V.scad
             )
 
             REM -- Delete working copy of .scad file
