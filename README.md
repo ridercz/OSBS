@@ -124,6 +124,10 @@ OSBS will render the following files:
 
 Of course, you can combine multiple extruders with `.vars` files as mentioned above.
 
+## Complex example
+
+For complex example see the [Modular Price Tags](https://www.thingiverse.com/thing:3316622) thing on Thingiverse. 
+
 # OSBS Configuration
 
 You may set the following variables at the beginning of the [`build.cmd`](build.cmd) file:
