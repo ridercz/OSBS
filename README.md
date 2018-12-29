@@ -2,7 +2,9 @@
 
 [OpenSCAD](https://www.openscad.org/) is great 3D modelling software, where you write the model in code, instead of graphically designing it. It's strength is in easy parametric modelling. It's weakness is that it lacks the ability to export the parametrically customized models easily in batches. So I designed **OSBS - the OpenSCAD Build System**.
 
-It's basically a fancy name for (not so) simple Windows batch script. But I'm using it for some time already and I think it's a good idea to publish it. [Jiří Kubíček](https://github.com/kubicek) has translated the batch to shell script for Linux and Mac users.
+It's basically a fancy name for (not so) simple batch/shell script. But I'm using it for some time already and I think it's a good idea to publish it.
+
+Original version was written as CMD for Windows, [Jiří Kubíček](https://github.com/kubicek) has translated the batch to shell script for Linux and Mac users.
 
 ## Features
 
@@ -130,7 +132,7 @@ For complex example see the [Modular Price Tags](https://www.thingiverse.com/thi
 
 # OSBS Configuration
 
-You may set the following variables at the beginning of the [`build.cmd`](build.cmd) file:
+You may set the following variables at the beginning of the [`build.cmd`](build.cmd) or [`build.sh`](build.sh) file:
 
 ```
 SET OSBS_SCAD="C:\Program Files\OpenSCAD\openscad.com"
